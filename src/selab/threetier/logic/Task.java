@@ -36,6 +36,18 @@ public class Task extends Entity {
         Storage.getInstance().getTasks().delete(this);
     }
 
+    public void validate() throws Exception {
+        if(start.compareTo(end) >= 0)
+            throw new Exception();
+        for (Task task: Storage.getInstance().getTasks().getAll()) {
+            if (task.start.compareTo(end) < 0 && task.start.compareTo(start) >= 0)
+                throw new Exception();
+            if (task.end.compareTo(start) > 0 && task.end.compareTo(end) <= 0)
+                throw new Exception();
+        }
+
+    }
+
     public static ArrayList<Task> getAll() {
         return Storage.getInstance().getTasks().getAll();
     }
